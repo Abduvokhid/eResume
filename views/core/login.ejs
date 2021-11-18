@@ -1,0 +1,59 @@
+<div class="account-pages my-5 pt-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-6 col-md-8">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="">
+                            <div class="text-center">
+                                <a href="/" class="">
+                                    <img src="assets/images/logo-dark.png" alt="" height="24"
+                                         class="auth-logo logo-dark mx-auto">
+                                    <img src="assets/images/logo-light.png" alt="" height="24"
+                                         class="auth-logo logo-light mx-auto">
+                                </a>
+                            </div>
+                            <h4 class="font-size-18 text-muted mt-2 text-center">Добро пожаловать!</h4>
+                            <p class="mb-2 text-center">Авторизуйтесь, чтобы пользоваться eResume.</p>
+                            <form class="form-horizontal" action="/login" method="post">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="username">Юзернейм:</label>
+                                            <input type="text" class="form-control" id="username"
+                                                   placeholder="Введите юзернейм">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password">Пароль:</label>
+                                            <input type="password" class="form-control" id="password"
+                                                   placeholder="Введите пароль">
+                                        </div>
+
+                                        <div class="row hidden">
+                                            <div class="col-12">
+                                                <div class="text-md-end mt-0 mt-md-1">
+                                                    <a href="/recover" class="text-muted"><i
+                                                                class="mdi mdi-lock"></i> Забыли пароль?</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid mt-4">
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Войти
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <p class="text-black-50">Ещё нет аккаунта? <a href="/register" class="fw-medium text-primary"> Регистрируйтесь </a>
+                    </p>
+                    <p class="text-black-50">Copyright © 2021 eResume</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

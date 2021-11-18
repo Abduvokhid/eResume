@@ -1,0 +1,73 @@
+<div class="account-pages my-5 pt-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10 col-md-12">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="">
+                            <div class="text-center">
+                                <a href="/" class="">
+                                    <img src="assets/images/logo-dark.png" alt="" height="24"
+                                         class="auth-logo logo-dark mx-auto">
+                                    <img src="assets/images/logo-light.png" alt="" height="24"
+                                         class="auth-logo logo-light mx-auto">
+                                </a>
+                            </div>
+                            <h4 class="font-size-18 text-muted mt-2 text-center">Добро пожаловать!</h4>
+                            <p class="mb-2 text-center">Авторизуйтесь, чтобы пользоваться eResume.</p>
+                            <form class="form-horizontal" action="/login" method="post">
+
+                                <div class="row">
+                                    <div class="col-md-6 block-border">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="username">Юзернейм:</label>
+                                            <input type="text" class="form-control" id="username"
+                                                   placeholder="Придумайте юзернейм">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password">Пароль:</label>
+                                            <input type="password" class="form-control" id="password"
+                                                   placeholder="Придумайте пароль">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="confirm_password">Подтвердите пароль:</label>
+                                            <input type="password" class="form-control" id="confirm_password"
+                                                   placeholder="Повторно введите пароль">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="email">Э-почта:</label>
+                                            <input type="text" class="form-control" id="email"
+                                                   placeholder="Введите э-почту">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label mb-0" for="captcha">Подтвердите, что вы не робот:</label>
+                                            <%- captcha %>
+                                            <input type="text" class="form-control mt-2" id="captcha"
+                                                   placeholder="Введите символы с картинки">
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="term-conditionCheck">
+                                            <label class="form-check-label fw-normal" for="term-conditionCheck">Я принимаю <a href="#" class="text-primary">Условия использования сервиса</a></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex mt-2 text-center justify-content-center">
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">Регистрация
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <p class="text-black-50">Есть аккаунт? <a href="/login" class="fw-medium text-primary"> Войдите </a>
+                    </p>
+                    <p class="text-black-50">Copyright © 2021 eResume</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
