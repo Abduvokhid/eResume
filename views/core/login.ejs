@@ -2,32 +2,46 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-4 col-lg-6 col-md-8">
+                <% if (typeof error !== 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="">
                             <div class="text-center">
                                 <a href="/" class="">
-                                    <img src="assets/images/logo-dark.png" alt="" height="24"
+                                    <img src="assets/images/logo-dark.svg" alt="" height="24"
                                          class="auth-logo logo-dark mx-auto">
-                                    <img src="assets/images/logo-light.png" alt="" height="24"
+                                    <img src="assets/images/logo-light.svg" alt="" height="24"
                                          class="auth-logo logo-light mx-auto">
                                 </a>
                             </div>
                             <h4 class="font-size-18 text-muted mt-2 text-center">Добро пожаловать!</h4>
                             <p class="mb-2 text-center">Авторизуйтесь, чтобы пользоваться eResume.</p>
-                            <form class="form-horizontal" action="/login" method="post">
+                            <form id="login_form" class="form-horizontal needs-validation" novalidate action="/login"
+                                  method="post">
 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label class="form-label" for="username">Юзернейм:</label>
-                                            <input type="text" class="form-control" id="username"
-                                                   placeholder="Введите юзернейм">
+                                            <label class="form-label" for="email">Э-почта:</label>
+                                            <input required type="email" name="email" class="form-control" id="email"
+                                                   placeholder="Введите э-почту"
+                                                   value="<% if (typeof email !== 'undefined') { %><%= email %><% } %>">
+                                            <div class="invalid-feedback">
+                                                Неправильная э-почта
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="password">Пароль:</label>
-                                            <input type="password" class="form-control" id="password"
+                                            <input required type="password" name="password" class="form-control"
+                                                   id="password"
                                                    placeholder="Введите пароль">
+                                            <div class="invalid-feedback">
+                                                Пароль обязателен
+                                            </div>
                                         </div>
 
                                         <div class="row hidden">
@@ -49,7 +63,8 @@
                     </div>
                 </div>
                 <div class="mt-2 text-center">
-                    <p class="text-black-50">Ещё нет аккаунта? <a href="/register" class="fw-medium text-primary"> Регистрируйтесь </a>
+                    <p class="text-black-50">Ещё нет аккаунта? <a href="/register" class="fw-medium text-primary">
+                            Регистрируйтесь </a>
                     </p>
                     <p class="text-black-50">Copyright © 2021 eResume</p>
                 </div>

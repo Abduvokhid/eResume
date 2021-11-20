@@ -20,7 +20,7 @@
     "express-ejs-layouts": "2.5.1",
     "express-session": "1.17.2",
     "mongoose": "6.0.12",
-    "svg-captcha": "^1.4.0"
+    "svg-captcha": "1.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

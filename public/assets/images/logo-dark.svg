@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1010" height="240" viewBox="0 0 1010 240">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #20b097;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        font-size: 160px;
+        fill: #444;
+        font-family: Roboto;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="78" y="37" width="149" height="165" rx="8" ry="8"/>
+  <rect class="cls-2" x="111" y="154" width="85" height="16"/>
+  <rect class="cls-2" x="111" y="121" width="85" height="16"/>
+  <rect class="cls-2" x="162" y="80" width="34" height="16"/>
+  <rect class="cls-2" x="111" y="70" width="35" height="35"/>
+  <text id="eResume" class="cls-3" x="265.841" y="176.054">eResume</text>
+</svg>

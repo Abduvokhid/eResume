@@ -18,6 +18,7 @@ const mongoStore = new MongoDBStore({
 
 router.use((req, res, next) => {
   req.app.set('view engine', 'ejs')
+  req.app.locals.path = req.path
   next()
 })
 
