@@ -1,9 +1,10 @@
 const express = require('express')
-const flash = require('connect-flash')
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
 const expressLayouts = require('express-ejs-layouts')
 const MongoDBStore = require('connect-mongodb-session')(expressSession)
+const flash = require('./flash')
+const authenticate = require('./authenticate')
 
 const router = express.Router()
 
@@ -30,12 +31,13 @@ router.use(expressSession({
   secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: mongoStore
+  store: mongoStore,
+  cookie: { maxAge: parseInt(process.env.COOKIE_MAX_AGE) }
 }))
 router.use(flash())
+router.use(authenticate)
 router.use((req, res, next) => {
   res.locals.path = req.path
-  res.locals.flash = req.flash()
   next()
 })
 
