@@ -1,8 +1,8 @@
 const User = require('../models/User')
 
-module.exports.createUser = async (username, email, password) => {
+module.exports.createUser = async (name, email, password) => {
   const user = new User({
-    username,
+    name,
     email,
     password
   })

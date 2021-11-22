@@ -27,12 +27,12 @@
                                 <div class="row">
                                     <div class="col-md-6 block-border">
                                         <div class="mb-3">
-                                            <label class="form-label" for="username">Юзернейм:</label>
-                                            <input type="text" class="form-control" name="username" id="username"
-                                                   value="<% if (typeof username !== 'undefined') { %><%= username %><% } %>"
-                                                   placeholder="Придумайте юзернейм" minlength="5" required>
+                                            <label class="form-label" for="email">Э-почта:</label>
+                                            <input type="email" class="form-control" name="email" id="email"
+                                                   value="<% if (typeof email !== 'undefined') { %><%= email %><% } %>"
+                                                   placeholder="Введите э-почту" required>
                                             <div class="invalid-feedback">
-                                                Неправильный юзернейм. Минимум 5 букв.
+                                                Неправильная э-почта.
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -54,12 +54,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="email">Э-почта:</label>
-                                            <input type="email" class="form-control" name="email" id="email"
-                                                   value="<% if (typeof email !== 'undefined') { %><%= email %><% } %>"
-                                                   placeholder="Введите э-почту" required>
+                                            <label class="form-label" for="name">Полное имя:</label>
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                   value="<% if (typeof name !== 'undefined') { %><%= name %><% } %>"
+                                                   placeholder="Полное имя" minlength="5" required>
                                             <div class="invalid-feedback">
-                                                Неправильная э-почта.
+                                                Неправильное имя. Минимум 5 букв.
                                             </div>
                                         </div>
                                         <div class="mb-3">

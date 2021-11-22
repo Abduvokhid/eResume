@@ -8,5 +8,6 @@ module.exports = async (req, res, next) => {
   if (!user) delete req.session.user
 
   req.user = user
+  req.app.locals.user = user
   next()
 }

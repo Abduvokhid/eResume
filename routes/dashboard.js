@@ -46,7 +46,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   if (req.user) return res.redirect('/')
 
-  const { username, email, password, confirm_password, captcha } = req.body
+  const { name, email, password, confirm_password, captcha } = req.body
 
   const error = async (message) => {
     await req.flash('error', message)
@@ -54,25 +54,24 @@ router.post('/register', async (req, res) => {
     req.session.captcha = captcha.text
     return res.render('core/register', {
       layout: 'core_layout',
-      username, email,
+      name, email,
       error: await req.getFlash('error'),
       captcha: captcha.data
     })
   }
 
-  if (!captcha || !username || !password || !email) return await error('Все поля обязательны.')
+  if (!captcha || !name || !password || !email) return await error('Все поля обязательны.')
 
   if (captcha !== req.session.captcha) return await error('Неверно! Подтвердите, что вы не робот.')
 
   if (password !== confirm_password) return await error('Пароли не совпадают. Проверьте и попробуйте заново.')
 
-  if (await userDAL.getUserByUsername(username)) return await error('Пользователь с таким юзернеймом уже существует.')
   if (await userDAL.getUserByEmail(email)) return await error('Пользователь с такой почтой уже существует.')
 
   const password_hash = await bcrypt.hash(password, parseInt(process.env.BCRYPT_ROUNDS))
 
   await req.flash('info', 'Ваш аккаунт успешно зарегистрирован!')
-  await userDAL.createUser(username, email, password_hash)
+  await userDAL.createUser(name, email, password_hash)
   res.redirect('/login')
 })
 
