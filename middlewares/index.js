@@ -32,7 +32,7 @@ router.use(expressSession({
   resave: false,
   saveUninitialized: false,
   store: mongoStore,
-  cookie: { maxAge: parseInt(process.env.COOKIE_MAX_AGE) }
+  cookie: { maxAge: parseInt(process.env.COOKIE_MAX_AGE) || 1000 * 60 * 60 }
 }))
 router.use(flash())
 router.use(authenticate)

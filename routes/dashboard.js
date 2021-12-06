@@ -80,6 +80,14 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/account', (req, res) => {
+  res.render('dashboard/account')
+})
+
+router.get('/settings', (req, res) => {
+  res.render('dashboard/settings')
+})
+
 router.get('/', checkPermission(), (req, res) => {
   res.render('dashboard/index')
 })
