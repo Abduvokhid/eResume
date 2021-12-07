@@ -13,7 +13,7 @@ function oauthSignIn() {
 
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {'client_id': '447932960803-emkiv8aaevbfvh42v0n4r5a081hjh9hk.apps.googleusercontent.com',
-    'redirect_uri': 'https://localhost:5000/callbacks/google_register',
+    'redirect_uri': 'http://localhost:5000/callbacks/google_register?is_new=true',
     'response_type': 'token',
     'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
   };
