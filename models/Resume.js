@@ -13,6 +13,9 @@ const ResumeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  about: {
+    type: String
+  },
   educations: [{
     education: {
       type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +25,16 @@ const ResumeSchema = new mongoose.Schema({
   }],
   status: {
     type: String,
-    enum: ['draft', 'public', 'hidden', 'deleted'],
+    enum: ['draft', 'public', 'private', 'deleted'],
     default: 'draft'
+  },
+  edited_date: {
+    type: Date,
+    default: Date.now
+  },
+  created_date: {
+    type: Date,
+    default: Date.now
   }
 }, {
   versionKey: false
