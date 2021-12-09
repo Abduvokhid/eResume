@@ -6,10 +6,22 @@ const checkPermission = require('../middlewares/checkPermission')
 const router = express.Router()
 
 router.get('/google_register', (req, res) => {
+  const error = async (msg) => {
+    await req.flash('error', msg)
+    return res.render('core/login', { layout: 'core_layout', error: await req.getFlash('error') })
+  }
 
-  console.log(req.query)
+  const {
+    is_new,
+    token
+  } = req.query
 
-  res.redirect('/')
+  if (!is_new) {
+    if (!token) return error('Что-то пошло не так. Попробуйте позже.')
+
+  } else {
+    res.render('callbacks/google_register', { layout: false })
+  }
 })
 
 module.exports = router
