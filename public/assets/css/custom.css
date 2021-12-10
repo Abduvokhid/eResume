@@ -16,3 +16,19 @@
         border-color: #D3D3D3FF;
     }
 }
+
+.table-bottom-border {
+    border-bottom: 1px solid #eff2f7 !important;
+}
+
+.text-right {
+    text-align: end;
+}
+
+.no-cursor {
+    cursor: default;
+}
+
+.topnav {
+    margin-top: 0;
+}
