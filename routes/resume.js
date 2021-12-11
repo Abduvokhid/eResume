@@ -33,4 +33,24 @@ router.get('/:id/edit', checkPermission(), async (req, res) => {
   res.render('resume/edit', { resume })
 })
 
+router.post('/:id/edit', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  const { title, name, about } = req.body
+  await ResumeDAL.updateResume(req.params.id, title, name, about)
+  res.redirect('/resume')
+})
+
+router.post('/:id/status', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+
+  const status = req.body.status
+  if (!['draft', 'public', 'private'].includes(status)) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  await ResumeDAL.updateResumeStatus(req.params.id, status)
+  res.redirect('/resume')
+})
+
 module.exports = router

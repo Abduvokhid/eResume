@@ -29,6 +29,10 @@
     cursor: default;
 }
 
+.no-select {
+    user-select: none;
+}
+
 .topnav {
     margin-top: 0;
 }

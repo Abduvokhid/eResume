@@ -18,8 +18,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Список всех ваших резюме</h5>
-                <p class="card-title-desc">dfadasds</p>
+                <h5 class="card-title mb-3">Список всех ваших резюме</h5>
                 <div class="list-group">
                     <% if (user_resumes.length > 0) { %>
                         <% for (const resume of user_resumes) { %>
@@ -35,8 +34,12 @@
                                         <span class="badge badge-soft-warning align-middle">Черновик</span>
                                     <% } %>
                                 </span>
+                                <div>
+                                <a target="_blank" href="/r/<%= resume._id %>"
+                                   class="btn btn-success btn-sm">Посмотреть</a>
                                 <a href="/resume/<%= resume._id %>/edit"
-                                   class="btn btn-success btn-sm">Редактировать</a>
+                                   class="btn btn-warning btn-sm">Редактировать</a>
+                                </div>
                             </span>
                         <% } %>
                     <% } else { %>
