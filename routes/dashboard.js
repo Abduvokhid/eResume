@@ -80,12 +80,18 @@ router.post('/logout', async (req, res) => {
   res.redirect('/')
 })
 
-router.get('/account', (req, res) => {
+router.get('/account', checkPermission(), (req, res) => {
   res.render('dashboard/account')
 })
 
-router.get('/settings', (req, res) => {
+router.get('/settings', checkPermission(), (req, res) => {
   res.render('dashboard/settings')
+})
+
+router.post('/settings/password', checkPermission(), async (req, res) => {
+  const { old_password, new_password, new_password_confirm } = req.body
+  console.log(req.body)
+  res.send(req.user)
 })
 
 router.get('/', checkPermission(), (req, res) => {

@@ -14,8 +14,7 @@ const ResumeSchema = new mongoose.Schema({
     required: true
   },
   job_position: {
-    type: String,
-    required: true
+    type: String
   },
   about: {
     type: String
