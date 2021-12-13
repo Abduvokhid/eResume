@@ -19,12 +19,17 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title"><strong>Смена пароля</strong></h4>
-                <p class="card-title-desc">Внимание! После смены пароля вам надо будет заново авторизоваться.</p>
+                <p class="card-title-desc"><strong>Внимание!</strong> После смены пароля вам надо будет заново авторизоваться.</p>
 
                 <form class="custom-validation" action="/settings/password" method="post">
                     <div class="mb-3">
                         <label for="old_password" class="form-label">Старый пароль</label>
                         <input type="password" id="old_password" name="old_password" class="form-control" required placeholder="Введите старый пароль"/>
+                        <% if (typeof flash.incorrect_password !== 'undefined') { %>
+                            <div class="text-danger small mt-1">
+                                <%= flash.incorrect_password %>
+                            </div>
+                        <% } %>
                     </div>
 
                     <div class="mb-3">
@@ -35,6 +40,11 @@
                         <div class="mt-2">
                             <input type="password" id="new_password_confirm" name="new_password_confirm" class="form-control" required placeholder="Повторите новый пароль"/>
                         </div>
+                        <% if (typeof flash.passwords_mismatch !== 'undefined') { %>
+                            <div class="text-danger small mt-1">
+                                <%= flash.passwords_mismatch %>
+                            </div>
+                        <% } %>
                     </div>
 
                     <div>

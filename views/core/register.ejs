@@ -3,11 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10 col-md-12">
                 <% if (typeof error !== 'undefined') { %>
-                    <% for (var e = 0; e < error.length; e++) { %>
-                        <div class="alert alert-danger" role="alert">
-                            <%= error[e] %>
-                        </div>
-                    <% } %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
                 <% } %>
                 <div class="card">
                     <div class="card-body p-4">

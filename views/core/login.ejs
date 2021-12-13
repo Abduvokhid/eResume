@@ -3,18 +3,19 @@
         <div class="row justify-content-center">
             <div class="col-xl-4 col-lg-6 col-md-8">
                 <% if (typeof success !== 'undefined') { %>
-                    <% for (var s = 0; s < success.length; s++) { %>
-                        <div class="alert alert-success" role="alert">
-                            <%= success[s] %>
-                        </div>
-                    <% } %>
+                    <div class="alert alert-success" role="alert">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <% if (typeof password_success !== 'undefined') { %>
+                    <div class="alert alert-success" role="alert">
+                        <%= password_success %>
+                    </div>
                 <% } %>
                 <% if (typeof error !== 'undefined') { %>
-                    <% for (var e = 0; e < error.length; e++) { %>
-                        <div class="alert alert-danger" role="alert">
-                            <%= error[e] %>
-                        </div>
-                    <% } %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
                 <% } %>
                 <div class="card">
                     <div class="card-body p-4">

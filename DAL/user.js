@@ -20,3 +20,7 @@ module.exports.getUserByUsername = (username) => {
 module.exports.getUserByEmail = (email) => {
   return User.findOne({ email })
 }
+
+module.exports.updateUserPassword = async (user_id, password) => {
+  await User.findByIdAndUpdate(user_id, { password })
+}

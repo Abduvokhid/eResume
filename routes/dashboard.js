@@ -9,7 +9,13 @@ router.get('/login', async (req, res) => {
   if (req.user) return res.redirect('/')
   const { redirect_to } = req.query
   if (redirect_to) req.session.redirect_to = redirect_to
-  res.render('core/login', { layout: 'core_layout', success: await req.getFlash('info') })
+  const flash = await req.getFlash()
+  console.log('flash', flash)
+  res.render('core/login', {
+    layout: 'core_layout',
+    password_success: flash.password_success,
+    success: flash.success
+  })
 })
 
 router.post('/login', async (req, res) => {
@@ -18,8 +24,8 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
   const error = async () => {
-    await req.flash('error', 'Указаны неверные данные. Пожалуйста, попробуйте еще раз.')
-    return res.render('core/login', { layout: 'core_layout', email, error: await req.getFlash('error') })
+    await req.flash('login_error', 'Указаны неверные данные. Пожалуйста, попробуйте еще раз.')
+    return res.render('core/login', { layout: 'core_layout', email, error: await req.getFlash('login_error') })
   }
 
   const user = await userDAL.getUserByEmail(email)
@@ -49,13 +55,13 @@ router.post('/register', async (req, res) => {
   const { name, email, password, confirm_password, captcha } = req.body
 
   const error = async (message) => {
-    await req.flash('error', message)
+    await req.flash('register_error', message)
     const captcha = svgCaptcha.create({ size: 5, noise: 2 })
     req.session.captcha = captcha.text
     return res.render('core/register', {
       layout: 'core_layout',
       name, email,
-      error: await req.getFlash('error'),
+      error: await req.getFlash('register_error'),
       captcha: captcha.data
     })
   }
@@ -70,7 +76,7 @@ router.post('/register', async (req, res) => {
 
   const password_hash = await bcrypt.hash(password, parseInt(process.env.BCRYPT_ROUNDS))
 
-  await req.flash('info', 'Ваш аккаунт успешно зарегистрирован!')
+  await req.flash('register_success', 'Ваш аккаунт успешно зарегистрирован!')
   await userDAL.createUser(name, email, password_hash)
   res.redirect('/login')
 })
@@ -84,14 +90,35 @@ router.get('/account', checkPermission(), (req, res) => {
   res.render('dashboard/account')
 })
 
-router.get('/settings', checkPermission(), (req, res) => {
-  res.render('dashboard/settings')
+router.get('/settings', checkPermission(), async (req, res) => {
+  const flash = await req.getFlash()
+  return res.render('dashboard/settings', { flash })
 })
 
 router.post('/settings/password', checkPermission(), async (req, res) => {
+  const error = async (type, message) => {
+    await req.flash(type, message)
+    await res.redirect('/settings')
+  }
+
   const { old_password, new_password, new_password_confirm } = req.body
-  console.log(req.body)
-  res.send(req.user)
+
+  if (new_password_confirm !== new_password) return await error('passwords_mismatch', 'Новые пароли не совпадают. Попробуйте заново.')
+
+  const isMatch = await bcrypt.compare(old_password, req.user.password)
+  if (!isMatch) return await error('incorrect_password', 'Неправильный пароль. Попробуйте заново.')
+
+  const password_hash = await bcrypt.hash(new_password, parseInt(process.env.BCRYPT_ROUNDS))
+  await userDAL.updateUserPassword(req.user._id, password_hash)
+
+  console.log('old_session', req.session)
+  req.session.regenerate(async (err) => {
+    if (!err) {
+      req.flash('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.').then(() => console.log('new_session', req.session))
+    }
+  })
+
+  return res.redirect('/login')
 })
 
 router.get('/', checkPermission(), (req, res) => {
