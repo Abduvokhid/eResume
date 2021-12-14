@@ -16,6 +16,14 @@ const ResumeSchema = new mongoose.Schema({
   job_position: {
     type: String
   },
+  gender: {
+    type: String,
+    enum: ['hidden', 'male', 'female'],
+    default: 'hidden'
+  },
+  living_city: {
+    type: String
+  },
   about: {
     type: String
   },
@@ -26,9 +34,16 @@ const ResumeSchema = new mongoose.Schema({
     },
     order: Number
   }],
+  jobs: [{
+    job: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'job'
+    },
+    order: Number
+  }],
   status: {
     type: String,
-    enum: ['draft', 'public', 'private', 'deleted'],
+    enum: ['draft', 'public', 'private'],
     default: 'draft'
   },
   edited_date: {

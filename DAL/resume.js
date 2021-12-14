@@ -4,13 +4,15 @@ module.exports.getResumes = async (user_id) => {
   return Resume.find({ user: user_id }).lean()
 }
 
-module.exports.createResume = async (user_id, title, name, job_position, about) => {
+module.exports.createResume = async (user_id, title, name, job_position, about, living_city, gender) => {
   const resume = new Resume({
     user: user_id,
     title: title,
     name: name,
     job_position: job_position,
-    about: about
+    about: about,
+    living_city: living_city,
+    gender: gender
   })
   await resume.save()
 }

@@ -21,13 +21,27 @@
             <div class="card-body">
                 <form class="custom-validation" action="/resume/new" method="post">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Название резюме <small>(видно только вам)</small></label>
+                        <label for="title" class="form-label"><sup class="text-danger">*</sup> Название резюме <small>(видно только вам)</small></label>
                         <input id="title" name="title" type="text" class="form-control" placeholder="Резюме маркетолога и тд." required/>
                     </div>
 
                     <div class="mb-3">
-                        <label for="name" class="form-label">Ваше имя</label>
+                        <label for="name" class="form-label"><sup class="text-danger">*</sup> Ваше имя</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Абдувохид Ахмедов и тд." required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="living_city" class="form-label">Город проживания</label>
+                        <input type="text" id="living_city" name="living_city" class="form-control" placeholder="Ташкент, Узбекистан и тд."/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Ваш пол</label>
+                        <select name="gender" id="gender" class="form-select">
+                            <option value="hidden">Не указан</option>
+                            <option value="male">Мужчина</option>
+                            <option value="female">Женщина</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">

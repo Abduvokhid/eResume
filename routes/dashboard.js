@@ -9,12 +9,13 @@ router.get('/login', async (req, res) => {
   if (req.user) return res.redirect('/')
   const { redirect_to } = req.query
   if (redirect_to) req.session.redirect_to = redirect_to
-  const flash = await req.getFlash()
-  console.log('flash', flash)
+  const success = await req.getFlash('register_success')
+  const password_success = req.cookies.password_success
+  res.clearCookie('password_success')
   res.render('core/login', {
     layout: 'core_layout',
-    password_success: flash.password_success,
-    success: flash.success
+    password_success: password_success,
+    success: success
   })
 })
 
@@ -111,12 +112,8 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
   const password_hash = await bcrypt.hash(new_password, parseInt(process.env.BCRYPT_ROUNDS))
   await userDAL.updateUserPassword(req.user._id, password_hash)
 
-  console.log('old_session', req.session)
-  req.session.regenerate(async (err) => {
-    if (!err) {
-      req.flash('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.').then(() => console.log('new_session', req.session))
-    }
-  })
+  req.session.regenerate(() => {})
+  res.cookie('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.')
 
   return res.redirect('/login')
 })

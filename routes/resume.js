@@ -21,8 +21,8 @@ router.get('/new', checkPermission(), async (req, res) => {
 })
 
 router.post('/new', checkPermission(), async (req, res) => {
-  const { title, name, job_position, about } = req.body
-  await ResumeDAL.createResume(req.user._id, title, name, job_position, about)
+  const { title, name, job_position, about, living_city, gender } = req.body
+  await ResumeDAL.createResume(req.user._id, title, name, job_position, about, living_city, gender)
   res.redirect('/resume')
 })
 
