@@ -1,0 +1,19 @@
+<div class="modal fade bs-delete-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удалить "<%= resume.title %>"?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><b>Внимание!</b> Вы не сможете вернуть резюме после удаление!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
+                <form action="/resume/<%= resume._id %>/delete" method="post">
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="modal fade bs-job-modal-center" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить новое место работы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="custom-validation" action="/resume/<%= resume._id %>/add_job" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label"><sup class="text-danger">*</sup> Ваша должность</label>
+                        <input id="title" name="title" type="text" class="form-control" placeholder="Маркетолог и тд." required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="company" class="form-label"><sup class="text-danger">*</sup> Компания</label>
+                        <input type="text" id="company" name="company" class="form-control" placeholder="OneNet LTD и тд." required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Местонахождение компании</label>
+                        <input type="text" id="location" name="location" class="form-control" placeholder="Ташкент, Узбекистан и тд."/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="from_date" class="form-label">Начало работы</label>
+                        <input type="month" id="from_date" name="from_date" class="form-control"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="to_date" class="form-label">Конец работы</label>
+                        <input type="month" id="to_date" name="to_date" class="form-control"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="duties" class="form-label">Обязанности</label>
+                        <textarea id="duties" name="duties" class="form-control" placeholder=""></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="achievements" class="form-label">Достижения</label>
+                        <textarea id="achievements" name="achievements" class="form-control" placeholder=""></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
+                <form action="/" method="post">
+                    <button type="button" class="btn btn-success waves-effect waves-light">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

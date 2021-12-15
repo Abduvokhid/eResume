@@ -1,0 +1,85 @@
+<div class="row no-cursor">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0"><%= resume.title %></h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item"><a href="/resume">Мои резюме</a></li>
+                    <li class="breadcrumb-item active"><%= resume.title %></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row no-cursor">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><b><%= resume.name %></b></h4>
+                <% if (resume.job_position) { %>
+                    <h6 class="card-subtitle font-14 text-muted"><%= resume.job_position %></h6>
+                <% } %>
+                <div>&nbsp;</div>
+                <% if (resume.living_city) { %>
+                    <div class="card-text"><b>Город проживания:</b> <%= resume.living_city %></div>
+                <% } %>
+                <% if (resume.gender && resume.gender !== 'hidden') { %>
+                    <div class="card-text"><b>Пол:</b> <%= selector.tGender(resume.gender) %></div>
+                <% } %>
+                <% if (resume.about && resume.about !== '') { %>
+                    <div class="card-text mt-3"><b>Обо мне:</b> <%= resume.about %></div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Опыт работы <a href="#" class="float-end" data-bs-toggle="modal"
+                                                           data-bs-target=".bs-job-modal-center">[добавить]</a></h5>
+                <% if (resume.jobs.length > 1) { %>
+                    <% for (const job of resume.jobs) { %>
+                        <div>&nbsp;</div>
+                        <div class="card-text mt-3"><b>Должность:</b> <%= job.title %></div>
+                        <div class="card-text mt-3"><b>Компания:</b> <%= job.company %></div>
+                    <% } %>
+                <% } else { %>
+                    <h6 class="font-14 text-muted mb-0">Нет данных</h6>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Образование <a href="/resume/<%= resume._id %>/add_education" class="float-end">[добавить]</a></h5>
+                <% if (resume.jobs.length > 1) { %>
+                    <% for (const job of resume.jobs) { %>
+                        <div>&nbsp;</div>
+                        <div class="card-text mt-3"><b>Учебное заведение:</b> <%= job.name %></div>
+                        <div class="card-text mt-3"><b>Название курса:</b> <%= job.course %></div>
+                    <% } %>
+                <% } else { %>
+                    <h6 class="font-14 text-muted mb-0">Нет данных</h6>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card no-cursor">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target=".bs-delete-modal-center">Удалить
+            </button>
+        </div>
+<!--        <div class="card">-->
+<!--            <a href="/resume/new" class="btn btn-success waves-effect">Создать резюме</a>-->
+<!--        </div>-->
+        <%- include('../components/support_block') %>
+    </div>
+</div>
+
+<%- include('../modals/delete_resume') %>
+<%- include('../modals/add_job') %>

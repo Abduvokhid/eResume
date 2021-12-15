@@ -36,3 +36,15 @@
 .topnav {
     margin-top: 0;
 }
+
+.resume-draft {
+    border-left: 4px rgba(252,185,44,0.8) solid;
+}
+
+.resume-public {
+    border-left: 4px rgba(10,192,116,0.8) solid;
+}
+
+.resume-private {
+    border-left: 4px rgba(52,58,64,0.8) solid;
+}

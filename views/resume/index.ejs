@@ -22,8 +22,9 @@
                 <div class="list-group">
                     <% if (user_resumes.length > 0) { %>
                         <% for (const resume of user_resumes) { %>
-                            <span class="list-group-item d-flex justify-content-between align-middle">
-                                <span class="align-self-center"><%= resume.title %>&nbsp;
+                            <a href="/resume/<%= resume._id %>" class="list-group-item list-group-item-action d-flex justify-content-between align-middle">
+                                <span class="align-self-center"><%= resume.title %></span>
+                                <div>
                                     <% if (resume.status === 'public') { %>
                                         <span class="badge badge-soft-success align-middle">Публичное</span>
                                     <% } %>
@@ -33,17 +34,11 @@
                                     <% if (resume.status === 'draft') { %>
                                         <span class="badge badge-soft-warning align-middle">Черновик</span>
                                     <% } %>
-                                </span>
-                                <div>
-                                <a target="_blank" href="/r/<%= resume._id %>"
-                                   class="btn btn-success btn-sm">Посмотреть</a>
-                                <a href="/resume/<%= resume._id %>/edit"
-                                   class="btn btn-warning btn-sm">Редактировать</a>
                                 </div>
-                            </span>
+                            </a>
                         <% } %>
                     <% } else { %>
-                        <span class="list-group-item no-cursor">Нет данных</span>
+                        <h6 class="font-14 text-muted mb-0">Нет данных</h6>
                     <% } %>
                 </div>
             </div>

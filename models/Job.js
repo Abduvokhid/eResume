@@ -17,8 +17,12 @@ const JobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  duties: [String],
-  achievements: [String],
+  duties: {
+    type: String
+  },
+  achievements: {
+    type: String
+  },
   from_date: {
     type: Date,
     required: true

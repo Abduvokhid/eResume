@@ -38,6 +38,7 @@ router.use(flash())
 router.use(authenticate)
 router.use((req, res, next) => {
   res.locals.path = req.path
+  res.locals.selector = require('../helpers/selector')
   req.session.user_agent = req.get('User-Agent')
   next()
 })

@@ -32,6 +32,22 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="living_city" class="form-label">Город проживания</label>
+                        <input type="text" id="living_city" name="living_city" class="form-control"
+                               placeholder="Ташкент, Узбекистан и тд." value="<%= resume.living_city %>"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Ваш пол</label>
+                        <select name="gender" id="gender" class="form-select" value="<%= resume.gender %>">
+                            <option value="hidden" <%= selector.isSelected(resume.gender, 'hidden') %>>Не указан
+                            </option>
+                            <option value="male" <%= selector.isSelected(resume.gender, 'male') %>>Мужчина</option>
+                            <option value="female" <%= selector.isSelected(resume.gender, 'female') %>>Женщина</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="job_position" class="form-label">Ваша позиция</label>
                         <input type="text" id="job_position" name="job_position" class="form-control"
                                placeholder="Главный маркетолог-финансист и тд." value="<%= resume.job_position %>"/>
@@ -99,29 +115,6 @@
                 </div>
             </form>
         <% } %>
-                <div class="card no-cursor mt-n3">
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target=".bs-delete-modal-center">Удалить</button>
-                </div>
-            <div class="modal fade bs-delete-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Удалить "<%= resume.title %>"?</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p><b>Внимание!</b> Вы не сможете вернуть резюме после удаление!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
-                            <form action="/" method="post">
-
-                            </form>
-                            <button type="button" class="btn btn-danger waves-effect waves-light">Удалить</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
         <%- include('../components/support_block') %>
     </div>
 </div>

@@ -5,7 +5,7 @@ Version: 1.0.0
 Contact: themesdesign.in@gmail.com
 File: Main Css File
 */
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap");
 #page-topbar {
   position: fixed;
   top: 0;
@@ -356,7 +356,7 @@ body[data-layout="horizontal"] .footer {
     font-size: 0.92rem;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
-    font-family: "Work Sans", sans-serif; }
+    font-family: "Roboto", sans-serif; }
     #sidebar-menu ul li a i {
       display: inline-block;
       min-width: 1.5rem;
@@ -394,7 +394,7 @@ body[data-layout="horizontal"] .footer {
   text-transform: uppercase;
   color: #505d69;
   font-weight: 600;
-  font-family: "Work Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   opacity: 0.5; }
 
 .mm-active {
@@ -638,7 +638,7 @@ body[data-sidebar-size="small"].vertical-collpsed .footer {
     position: relative;
     padding: 1rem 1.3rem;
     color: #74788d;
-    font-family: "Work Sans", sans-serif; }
+    font-family: "Roboto", sans-serif; }
     .topnav .navbar-nav .nav-link i {
       font-size: 15px;
       vertical-align: middle;
@@ -786,10 +786,10 @@ body[data-layout="horizontal"][data-layout-size="boxed"] .container-fluid, body[
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
   position: relative;
@@ -1011,7 +1011,7 @@ body[data-layout="horizontal"][data-layout-size="boxed"] .container-fluid, body[
   content: "\F0142"; }
 
 .font-family-secondary {
-  font-family: "Work Sans", sans-serif; }
+  font-family: "Roboto", sans-serif; }
 
 .font-size-10 {
   font-size: 10px !important; }
