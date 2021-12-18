@@ -28,18 +28,12 @@ const ResumeSchema = new mongoose.Schema({
     type: String
   },
   educations: [{
-    education: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'education'
-    },
-    order: Number
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'education'
   }],
   jobs: [{
-    job: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'job'
-    },
-    order: Number
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'job'
   }],
   status: {
     type: String,

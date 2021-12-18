@@ -40,7 +40,7 @@
             <div class="card-body">
                 <h5 class="card-title">Опыт работы <a href="#" class="float-end" data-bs-toggle="modal"
                                                            data-bs-target=".bs-job-modal-center">[добавить]</a></h5>
-                <% if (resume.jobs.length > 1) { %>
+                <% if (resume.jobs.length > 0) { %>
                     <% for (const job of resume.jobs) { %>
                         <div>&nbsp;</div>
                         <div class="card-text mt-3"><b>Должность:</b> <%= job.title %></div>
@@ -55,7 +55,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Образование <a href="/resume/<%= resume._id %>/add_education" class="float-end">[добавить]</a></h5>
-                <% if (resume.jobs.length > 1) { %>
+                <% if (resume.jobs.length > 0) { %>
                     <% for (const job of resume.jobs) { %>
                         <div>&nbsp;</div>
                         <div class="card-text mt-3"><b>Учебное заведение:</b> <%= job.name %></div>

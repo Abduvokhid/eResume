@@ -24,12 +24,11 @@ const JobSchema = new mongoose.Schema({
     type: String
   },
   from_date: {
-    type: Date,
+    type: Number,
     required: true
   },
   to_date: {
-    type: Date,
-    required: true
+    type: Number
   },
   created_date: {
     type: Date,

@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="custom-validation" action="/resume/<%= resume._id %>/add_job" method="post">
+                <form id="add_job_form" class="custom-validation" action="/resume/<%= resume._id %>/add_job" method="post">
                     <div class="mb-3">
                         <label for="title" class="form-label"><sup class="text-danger">*</sup> Ваша должность</label>
                         <input id="title" name="title" type="text" class="form-control" placeholder="Маркетолог и тд." required/>
@@ -45,9 +45,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
-                <form action="/" method="post">
-                    <button type="button" class="btn btn-success waves-effect waves-light">Добавить</button>
-                </form>
+                <button form="add_job_form" type="submit" class="btn btn-success waves-effect waves-light">Добавить</button>
             </div>
         </div>
     </div>

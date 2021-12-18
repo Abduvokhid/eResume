@@ -18,7 +18,7 @@ module.exports.createResume = async (user_id, title, name, job_position, about, 
 }
 
 module.exports.getResumeByID = async (resume_id) => {
-  return Resume.findById(resume_id).populate({ path: 'educations' }).populate({ path: 'jobs' })
+  return Resume.findById(resume_id).populate({ path: 'educations' }).populate({ path: 'jobs' }).lean()
 }
 
 module.exports.updateResumeStatus = async (resume_id, status) => {
@@ -27,6 +27,10 @@ module.exports.updateResumeStatus = async (resume_id, status) => {
 
 module.exports.deleteResume = async (resume_id) => {
   await Resume.findByIdAndDelete(resume_id)
+}
+
+module.exports.addJobToResume = async (resume_id, job_id) => {
+  await Resume.findByIdAndUpdate(resume_id, { $push: { jobs: job_id } })
 }
 
 module.exports.updateResume = async (resume_id, title, name, about, job_position, living_city, gender) => {
