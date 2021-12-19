@@ -1,3 +1,14 @@
+::selection {
+    background-color: #20b097;
+    color: #f0f0f0;
+}
+
+@media print {
+    .no-print {
+        visibility: hidden;
+    }
+}
+
 .hidden {
     filter: blur(4px);
     -webkit-touch-callout: none;

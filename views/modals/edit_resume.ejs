@@ -1,0 +1,57 @@
+<div class="modal fade bs-edit-resume-modal-center" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактировать основные данные</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_resume_form" class="custom-validation" action="/resume/<%= resume._id %>/edit" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label"><sup class="text-danger">*</sup> Название резюме <small>(видно только вам)</small></label>
+                        <input id="title" name="title" type="text" class="form-control"
+                               placeholder="Резюме маркетолога и тд." value="<%= resume.title %>" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label"><sup class="text-danger">*</sup> Ваше имя</label>
+                        <input type="text" id="name" name="name" class="form-control"
+                               placeholder="Абдувохид Ахмедов и тд." value="<%= resume.name %>" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="living_city" class="form-label">Город проживания</label>
+                        <input type="text" id="living_city" name="living_city" class="form-control"
+                               placeholder="Ташкент, Узбекистан и тд." value="<%= resume.living_city %>"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Ваш пол</label>
+                        <select name="gender" id="gender" class="form-select" value="<%= resume.gender %>">
+                            <option value="hidden" <%= selector.isSelected(resume.gender, 'hidden') %>>Не указан
+                            </option>
+                            <option value="male" <%= selector.isSelected(resume.gender, 'male') %>>Мужчина</option>
+                            <option value="female" <%= selector.isSelected(resume.gender, 'female') %>>Женщина</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="job_position" class="form-label">Ваша позиция</label>
+                        <input type="text" id="job_position" name="job_position" class="form-control"
+                               placeholder="Главный маркетолог-финансист и тд." value="<%= resume.job_position %>"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="about" class="form-label">О вас</label>
+                        <textarea id="about" name="about" class="form-control"
+                                  placeholder="Я студент университета и тд."><%= resume.about %></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
+                <button form="edit_resume_form" type="submit" class="btn btn-success waves-effect waves-light">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>

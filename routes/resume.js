@@ -34,7 +34,7 @@ router.post('/:id/edit', checkPermission(), async (req, res) => {
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   const { title, name, about, job_position, living_city, gender } = req.body
   await ResumeDAL.updateResume(req.params.id, title, name, about, job_position, living_city, gender)
-  res.redirect('/resume')
+  res.redirect(`/resume/${req.params.id}`)
 })
 
 router.post('/:id/status', checkPermission(), async (req, res) => {
