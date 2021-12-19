@@ -3,6 +3,7 @@ const ResumeDAL = require('../DAL/resume')
 const EducationDAL = require('../DAL/education')
 const JobDAL = require('../DAL/job')
 const checkPermission = require('../middlewares/checkPermission')
+const { sortByDates } = require('../helpers/sorters')
 const router = express.Router()
 
 router.get('/', checkPermission(), async (req, res) => {
@@ -89,11 +90,22 @@ router.post('/:id/add_job', checkPermission(), async (req, res) => {
   res.redirect(`/resume/${req.params.id}`)
 })
 
+router.post('/:id/delete_job/:job_id', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+
+  await ResumeDAL.deleteJobFromResume(resume._id, req.params.job_id)
+  await JobDAL.deleteJob(req.params.job_id)
+
+  res.redirect(`/resume/${req.params.id}`)
+})
+
 router.get('/:id', checkPermission(), async (req, res) => {
   const resume = await ResumeDAL.getResumeByID(req.params.id)
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
-  console.log(resume)
+  resume.jobs.sort(sortByDates)
   res.render('resume/show', { resume })
 })
 

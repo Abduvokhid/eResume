@@ -38,13 +38,43 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Опыт работы <a href="#" class="float-end" data-bs-toggle="modal"
-                                                           data-bs-target=".bs-job-modal-center">[добавить]</a></h5>
+                <h5 class="card-title text-muted"><b>Опыт работы</b> <a href="#" class="float-end"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target=".bs-job-modal-center">[добавить]</a>
+                </h5>
                 <% if (resume.jobs.length > 0) { %>
                     <% for (const job of resume.jobs) { %>
-                        <div>&nbsp;</div>
-                        <div class="card-text mt-3"><b>Должность:</b> <%= job.title %></div>
-                        <div class="card-text mt-3"><b>Компания:</b> <%= job.company %></div>
+                        <% const to_date = job.to_date ? moment(job.to_date).format('MMMM YYYY') : 'Сейчас' %>
+                        <% const from_date = moment(job.from_date).format('MMMM YYYY') %>
+                        <% const expanded = !!(job.duties || job.achievements) %>
+                        <div class="card card-body border border-light job_header bg-soft-light text-black-50 mb-0 mt-3"
+                             aria-expanded="<%= expanded %>">
+                            <div class="card-text">
+                                <span class="text-muted"><b><%= job.title %></b></span>&nbsp;в&nbsp;<%= job.company %>
+                                <span class="float-end pointer-cursor"
+                                      data-bs-toggle="modal"
+                                      data-bs-target=".bs-delete-job-modal-center">[удалить]</span>
+                            </div>
+                            <div class="card-text">
+                                <span class="text-muted"><%= from_date %> - <%= to_date %></span>&nbsp;//&nbsp;<%= job.location %>
+                            </div>
+                        </div>
+                        <% if (job.duties || job.achievements) { %>
+                            <div class="card card-body job_content bg-light text-black-50 mb-0">
+                                <b class="d-block">Обязанности:</b>
+                                <% if (job.duties) { %>
+                                    <p class="mb-0"><%- nl2br(job.duties) %></p>
+                                <% } %>
+                                <% if (job.achievements) { %>
+                                    <% if (job.duties) { %>
+                                        <div>&nbsp;</div>
+                                    <% } %>
+                                    <b class="d-block">Достижения:</b>
+                                    <p class="mb-0"><%- nl2br(job.achievements) %></p>
+                                <% } %>
+                            </div>
+                        <% } %>
+                        <%- include('../modals/delete_job', {job}) %>
                     <% } %>
                 <% } else { %>
                     <h6 class="font-14 text-muted mb-0">Нет данных</h6>
@@ -54,34 +84,13 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Образование <a href="/resume/<%= resume._id %>/add_education" class="float-end">[добавить]</a></h5>
-                <% if (resume.jobs.length > 0) { %>
-                    <% for (const job of resume.jobs) { %>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
-                        <div class="collapse multi-collapse" id="multiCollapseExample2">
-                            <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Collapsible Group Item #1
-                                    </button>
-                                </h5>
-                            </div>
-
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-text mt-3"><b>Учебное заведение:</b> <%= job.name %></div>
-                        <div class="card-text mt-3"><b>Название курса:</b> <%= job.course %></div>
+                <h5 class="card-title">Образование <a href="/resume/<%= resume._id %>/add_education" class="float-end">[добавить]</a>
+                </h5>
+                <% if (resume.educations.length > 0) { %>
+                    <% for (const education of resume.educations) { %>
+                        <div>&nbsp;</div>
+                        <div class="card-text mt-3"><b>Учебное заведение:</b> <%= education.name %></div>
+                        <div class="card-text mt-3"><b>Название курса:</b> <%= education.course %></div>
                     <% } %>
                 <% } else { %>
                     <h6 class="font-14 text-muted mb-0">Нет данных</h6>
@@ -96,9 +105,9 @@
                     data-bs-target=".bs-delete-modal-center">Удалить
             </button>
         </div>
-<!--        <div class="card">-->
-<!--            <a href="/resume/new" class="btn btn-success waves-effect">Создать резюме</a>-->
-<!--        </div>-->
+        <!--        <div class="card">-->
+        <!--            <a href="/resume/new" class="btn btn-success waves-effect">Создать резюме</a>-->
+        <!--        </div>-->
         <%- include('../components/support_block') %>
     </div>
 </div>

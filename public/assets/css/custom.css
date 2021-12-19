@@ -29,6 +29,10 @@
     cursor: default;
 }
 
+.pointer-cursor {
+    cursor: pointer;
+}
+
 .no-select {
     user-select: none;
 }
@@ -47,4 +51,14 @@
 
 .resume-private {
     border-left: 4px rgba(52,58,64,0.8) solid;
+}
+
+.job_header[aria-expanded="true"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.job_content {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

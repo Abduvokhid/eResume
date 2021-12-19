@@ -33,6 +33,10 @@ module.exports.addJobToResume = async (resume_id, job_id) => {
   await Resume.findByIdAndUpdate(resume_id, { $push: { jobs: job_id } })
 }
 
+module.exports.deleteJobFromResume = async (resume_id, job_id) => {
+  await Resume.findByIdAndUpdate(resume_id, { $pull: { jobs: job_id } })
+}
+
 module.exports.updateResume = async (resume_id, title, name, about, job_position, living_city, gender) => {
   await Resume.findByIdAndUpdate(resume_id, {
     title: title,
