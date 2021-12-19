@@ -17,22 +17,42 @@
 
 <div class="row no-cursor">
     <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title"><b><%= resume.name %></b></h4>
-                <% if (resume.job_position) { %>
-                    <h6 class="card-subtitle font-14 text-muted"><%= resume.job_position %></h6>
-                <% } %>
-                <div>&nbsp;</div>
-                <% if (resume.living_city) { %>
-                    <div class="card-text"><b>Город проживания:</b> <%= resume.living_city %></div>
-                <% } %>
-                <% if (resume.gender && resume.gender !== 'hidden') { %>
-                    <div class="card-text"><b>Пол:</b> <%= selector.tGender(resume.gender) %></div>
-                <% } %>
-                <% if (resume.about && resume.about !== '') { %>
-                    <div class="card-text mt-3"><b>Обо мне:</b> <%= resume.about %></div>
-                <% } %>
+        <div class="card card-body mb-0 border-bottom-none">
+            <h4 class="card-title"><b><%= resume.name %></b> <a href="#" class="float-end"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target=".bs-education-modal-center">[редактировать]</a>
+            </h4>
+            <% if (resume.job_position) { %>
+                <h6 class="card-subtitle font-14 text-muted"><%= resume.job_position %></h6>
+            <% } %>
+            <div>&nbsp;</div>
+            <% if (resume.living_city) { %>
+                <div class="card-text"><b>Город проживания:</b> <%= resume.living_city %></div>
+            <% } %>
+            <% if (resume.gender && resume.gender !== 'hidden') { %>
+                <div class="card-text"><b>Пол:</b> <%= selector.tGender(resume.gender) %></div>
+            <% } %>
+            <% if (resume.about && resume.about !== '') { %>
+                <div class="card-text mt-3"><b>Обо мне:</b> <%= resume.about %></div>
+            <% } %>
+            <div class="card-text text-muted mt-3">Дата
+                создания: <%= moment(resume.created_date).format('HH:mm DD/MM/YYYY') %></div>
+            <div class="card-text text-muted">Дата
+                редактирования: <%= moment(resume.edited_date).format('HH:mm DD/MM/YYYY') %></div>
+        </div>
+        <div class="card border-top-none bg-soft-light">
+            <div class="card-body d-flex flex-wrap justify-content-around">
+                <div class="col-lg-4 px-1">
+                    <a href="#" class="btn btn-soft-secondary d-block"><i class="mdi mdi-email"></i>&nbsp;Показать почту</a>
+                </div>
+                <div class="col-lg-4 px-1">
+                    <a href="#" class="btn btn-soft-secondary d-block"><i
+                                class="mdi mdi-phone"></i>&nbsp;Показать номер</a>
+                </div>
+                <div class="col-lg-4 px-1">
+                    <a href="#" class="btn btn-soft-secondary d-block"><i
+                                class="mdi mdi-telegram"></i>&nbsp;Показать юзернейм</a>
+                </div>
             </div>
         </div>
 
@@ -53,7 +73,7 @@
                                 <span class="text-muted"><b><%= job.title %></b></span>&nbsp;в&nbsp;<%= job.company %>
                                 <span class="float-end pointer-cursor"
                                       data-bs-toggle="modal"
-                                      data-bs-target=".bs-delete-job-modal-center">[удалить]</span>
+                                      data-bs-target=".bs-delete-job-modal-<%= job._id %>">[удалить]</span>
                             </div>
                             <div class="card-text">
                                 <span class="text-muted"><%= from_date %> - <%= to_date %></span>&nbsp;//&nbsp;<%= job.location %>
@@ -84,13 +104,30 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Образование <a href="/resume/<%= resume._id %>/add_education" class="float-end">[добавить]</a>
+                <h5 class="card-title text-muted"><b>Образование</b> <a href="#" class="float-end"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target=".bs-education-modal-center">[добавить]</a>
                 </h5>
                 <% if (resume.educations.length > 0) { %>
                     <% for (const education of resume.educations) { %>
-                        <div>&nbsp;</div>
-                        <div class="card-text mt-3"><b>Учебное заведение:</b> <%= education.name %></div>
-                        <div class="card-text mt-3"><b>Название курса:</b> <%= education.course %></div>
+                        <% const to_date = education.to_date ? moment(education.to_date).format('YYYY') : 'Сейчас' %>
+                        <% const from_date = moment(education.from_date).format('YYYY') %>
+                        <div class="card card-body border border-light job_header bg-soft-light text-black-50 mb-0 mt-3">
+                            <div class="card-text">
+                                <span class="text-muted"><b><%= education.name %></b></span>
+                                <span class="float-end pointer-cursor"
+                                      data-bs-toggle="modal"
+                                      data-bs-target=".bs-delete-education-modal-<%= education._id %>">[удалить]</span>
+                            </div>
+                            <div class="card-text">
+                                <span class="text-muted"><%= from_date %> - <%= to_date %></span>&nbsp;//&nbsp;<%= education.location %>
+                            </div>
+                            <div class="card-text"><%= education.course %></div>
+                            <% if (education.award) { %>
+                                <div class="card-text"><span class="text-muted">Оценка:</span>&nbsp;<%= education.award %></div>
+                            <% } %>
+                        </div>
+                        <%- include('../modals/delete_education', {education}) %>
                     <% } %>
                 <% } else { %>
                     <h6 class="font-14 text-muted mb-0">Нет данных</h6>
@@ -114,3 +151,4 @@
 
 <%- include('../modals/delete_resume') %>
 <%- include('../modals/add_job') %>
+<%- include('../modals/add_education') %>

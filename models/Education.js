@@ -10,20 +10,18 @@ const EducationSchema = new mongoose.Schema({
     required: true
   },
   award: {
-    type: String,
-    required: true
+    type: String
   },
   location: {
     type: String,
     required: true
   },
   from_date: {
-    type: Date,
+    type: Number,
     required: true
   },
   to_date: {
-    type: Date,
-    required: true
+    type: Number
   },
   created_date: {
     type: Date,

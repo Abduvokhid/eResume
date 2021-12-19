@@ -30,11 +30,23 @@ module.exports.deleteResume = async (resume_id) => {
 }
 
 module.exports.addJobToResume = async (resume_id, job_id) => {
-  await Resume.findByIdAndUpdate(resume_id, { $push: { jobs: job_id } })
+  await Resume.findByIdAndUpdate(resume_id, { $push: { jobs: job_id }, edited_date: Date.now() })
 }
 
 module.exports.deleteJobFromResume = async (resume_id, job_id) => {
-  await Resume.findByIdAndUpdate(resume_id, { $pull: { jobs: job_id } })
+  await Resume.findByIdAndUpdate(resume_id, { $pull: { jobs: job_id }, edited_date: Date.now() })
+}
+
+module.exports.addEducationToResume = async (resume_id, education_id) => {
+  await Resume.findByIdAndUpdate(resume_id, { $push: { educations: education_id }, edited_date: Date.now() })
+}
+
+module.exports.deleteEducationFromResume = async (resume_id, education_id) => {
+  await Resume.findByIdAndUpdate(resume_id, { $pull: { educations: education_id }, edited_date: Date.now() })
+}
+
+module.exports.setResumeUpdated = async (resume_id) => {
+  await Resume.findByIdAndUpdate(resume_id, { edited_date: Date.now() })
 }
 
 module.exports.updateResume = async (resume_id, title, name, about, job_position, living_city, gender) => {
@@ -44,6 +56,7 @@ module.exports.updateResume = async (resume_id, title, name, about, job_position
     job_position: job_position,
     about: about,
     living_city: living_city,
-    gender: gender
+    gender: gender,
+    edited_date: Date.now()
   })
 }

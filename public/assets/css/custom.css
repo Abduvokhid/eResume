@@ -53,12 +53,12 @@
     border-left: 4px rgba(52,58,64,0.8) solid;
 }
 
-.job_header[aria-expanded="true"] {
+.job_header[aria-expanded="true"], .border-bottom-none {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.job_content {
+.job_content, .border-top-none {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }

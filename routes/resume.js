@@ -8,14 +8,6 @@ const router = express.Router()
 
 router.get('/', checkPermission(), async (req, res) => {
   const user_resumes = await ResumeDAL.getResumes(req.user._id)
-  // const resumes = {
-  //   public: [],
-  //   private: [],
-  //   draft: [],
-  // }
-  // for (const resume of user_resumes) {
-  //   resumes[resume.status].push(resume)
-  // }
   res.render('resume/index', { user_resumes })
 })
 
@@ -90,6 +82,28 @@ router.post('/:id/add_job', checkPermission(), async (req, res) => {
   res.redirect(`/resume/${req.params.id}`)
 })
 
+router.post('/:id/add_education', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+
+  const data = { ...req.body }
+
+  if (data.name === '') delete data.name
+  if (data.course === '') delete data.course
+  if (data.award === '') delete data.award
+  if (data.location === '') delete data.location
+  data.from_date = Date.parse(req.body.from_date) || undefined
+  if (data.from_date === undefined) delete data.from_date
+  data.to_date = Date.parse(req.body.to_date) || undefined
+  if (data.to_date === undefined) delete data.to_date
+
+  const education = await EducationDAL.addEducation(data)
+  await ResumeDAL.addEducationToResume(resume._id, education._id)
+
+  res.redirect(`/resume/${req.params.id}`)
+})
+
 router.post('/:id/delete_job/:job_id', checkPermission(), async (req, res) => {
   const resume = await ResumeDAL.getResumeByID(req.params.id)
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
@@ -101,11 +115,23 @@ router.post('/:id/delete_job/:job_id', checkPermission(), async (req, res) => {
   res.redirect(`/resume/${req.params.id}`)
 })
 
+router.post('/:id/delete_education/:education_id', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+
+  await ResumeDAL.deleteEducationFromResume(resume._id, req.params.education_id)
+  await EducationDAL.deleteEducation(req.params.education_id)
+
+  res.redirect(`/resume/${req.params.id}`)
+})
+
 router.get('/:id', checkPermission(), async (req, res) => {
   const resume = await ResumeDAL.getResumeByID(req.params.id)
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   resume.jobs.sort(sortByDates)
+  resume.educations.sort(sortByDates)
   res.render('resume/show', { resume })
 })
 
