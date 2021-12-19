@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row hidden">
+                                        <div class="row">
                                             <div class="col-12">
                                                 <div class="text-md-end mt-0 mt-md-1">
                                                     <a href="/recover" class="text-muted"><i
@@ -70,8 +70,9 @@
                                 </div>
                             </form>
                             <hr/>
-                            <div class="d-grid mt-2">
-                                <button class="btn btn-light waves-effect waves-light" onclick="oauthSignIn('<%= domain %>')">Sign in via Google</button>
+                            <div class="d-flex mt-2 justify-content-around flex-wrap">
+                                <%- include('../components/google_button', {domain}) %>
+                                <%- include('../components/facebook_button', {domain}) %>
                             </div>
                         </div>
                     </div>

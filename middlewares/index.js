@@ -45,7 +45,8 @@ router.use((req, res, next) => {
 
   res.locals.nl2br = nl2br
 
-  moment.locale('ru', {
+  moment.locale('ru')
+  moment.updateLocale('ru', {
     months: {
       standalone: 'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'.split(
         '_'

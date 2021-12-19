@@ -2,6 +2,7 @@ const express = require('express')
 const svgCaptcha = require('svg-captcha')
 const bcrypt = require('bcrypt')
 const userDAL = require('../DAL/user')
+const accountDAL = require('../DAL/account')
 const checkPermission = require('../middlewares/checkPermission')
 const router = express.Router()
 
@@ -27,17 +28,18 @@ router.post('/login', async (req, res) => {
 
   const error = async () => {
     await req.flash('login_error', 'Указаны неверные данные. Пожалуйста, попробуйте еще раз.')
-    return res.render('core/login', { layout: 'core_layout', email, error: await req.getFlash('login_error') })
+    return res.render('core/login', { layout: 'core_layout', email,
+      domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000', error: await req.getFlash('login_error') })
   }
 
-  const user = await userDAL.getUserByEmail(email)
+  const account = await accountDAL.getAccountByEmail(email)
 
-  if (!user) return await error()
+  if (!account) return await error()
 
-  const isMatch = await bcrypt.compare(password, user.password)
+  const isMatch = await bcrypt.compare(password, account.data.password)
   if (!isMatch) return await error()
 
-  req.session.user = user._id
+  req.session.account = account._id
   const redirect_to = req.session.redirect_to ? decodeURIComponent(req.session.redirect_to) : '/'
   delete req.session.redirect_to
   res.redirect(redirect_to)
@@ -65,7 +67,8 @@ router.post('/register', async (req, res) => {
       layout: 'core_layout',
       name, email,
       error: await req.getFlash('register_error'),
-      captcha: captcha.data
+      captcha: captcha.data,
+      domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000'
     })
   }
 
@@ -75,12 +78,13 @@ router.post('/register', async (req, res) => {
 
   if (password !== confirm_password) return await error('Пароли не совпадают. Проверьте и попробуйте заново.')
 
-  if (await userDAL.getUserByEmail(email)) return await error('Пользователь с такой почтой уже существует.')
+  if (await accountDAL.getAccountByEmail(email)) return await error('Пользователь с такой почтой уже существует.')
 
   const password_hash = await bcrypt.hash(password, parseInt(process.env.BCRYPT_ROUNDS))
 
   await req.flash('register_success', 'Ваш аккаунт успешно зарегистрирован!')
-  await userDAL.createUser(name, email, password_hash)
+  const user = await userDAL.createUser(name)
+  await accountDAL.createPasswordAccount(user._id, email, password_hash)
   res.redirect('/login')
 })
 
@@ -108,11 +112,13 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
 
   if (new_password_confirm !== new_password) return await error('passwords_mismatch', 'Новые пароли не совпадают. Попробуйте заново.')
 
-  const isMatch = await bcrypt.compare(old_password, req.user.password)
+  const account = await accountDAL.getPasswordAccountByUser(req.user._id)
+
+  const isMatch = await bcrypt.compare(old_password, account.data.password)
   if (!isMatch) return await error('incorrect_password', 'Неправильный пароль. Попробуйте заново.')
 
   const password_hash = await bcrypt.hash(new_password, parseInt(process.env.BCRYPT_ROUNDS))
-  await userDAL.updateUserPassword(req.user._id, password_hash)
+  await accountDAL.updateUserPassword(req.user._id, password_hash)
 
   req.session.regenerate(() => {})
   res.cookie('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.')

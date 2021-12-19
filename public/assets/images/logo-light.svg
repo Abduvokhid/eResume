@@ -12,7 +12,7 @@
       .cls-3 {
         font-size: 160px;
         fill: #f0f0f0;
-        font-family: Roboto;
+        font-family: Arial;
         font-weight: 700;
       }
     </style>
