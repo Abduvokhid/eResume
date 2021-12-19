@@ -2,7 +2,7 @@
 //   return false;
 // })
 
-function oauthSignIn() {
+function oauthSignIn(domain) {
   // Google's OAuth 2.0 endpoint for requesting an access token
   var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 
@@ -13,7 +13,7 @@ function oauthSignIn() {
 
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {'client_id': '447932960803-emkiv8aaevbfvh42v0n4r5a081hjh9hk.apps.googleusercontent.com',
-    'redirect_uri': 'http://localhost:5000/callbacks/google_register?is_new=true',
+    'redirect_uri': `${domain}/callbacks/google_register?is_new=true`,
     'response_type': 'token',
     'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
   };

@@ -15,7 +15,8 @@ router.get('/login', async (req, res) => {
   res.render('core/login', {
     layout: 'core_layout',
     password_success: password_success,
-    success: success
+    success: success,
+    domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000'
   })
 })
 
@@ -47,7 +48,8 @@ router.get('/register', (req, res) => {
 
   const captcha = svgCaptcha.create({ size: 5, noise: 2 })
   req.session.captcha = captcha.text
-  res.render('core/register', { layout: 'core_layout', captcha: captcha.data })
+  res.render('core/register', { layout: 'core_layout', captcha: captcha.data,
+    domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000' })
 })
 
 router.post('/register', async (req, res) => {
