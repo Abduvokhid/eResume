@@ -21,6 +21,9 @@ const ResumeSchema = new mongoose.Schema({
     enum: ['hidden', 'male', 'female'],
     default: 'hidden'
   },
+  birthday: {
+    type: Date
+  },
   living_city: {
     type: String
   },

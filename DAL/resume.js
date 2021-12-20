@@ -15,6 +15,7 @@ module.exports.createResume = async (user_id, title, name, job_position, about, 
     gender: gender
   })
   await resume.save()
+  return resume
 }
 
 module.exports.getResumeByID = async (resume_id) => {
