@@ -12,3 +12,7 @@ module.exports.createVerification = async (account_id, hash, reason) => {
 module.exports.getVerification = (hash, reason) => {
   return Verification.findOne({ hash: hash, reason: reason }).populate('account')
 }
+
+module.exports.deleteVerification = async (verification_id) => {
+  await Verification.findByIdAndDelete(verification_id)
+}

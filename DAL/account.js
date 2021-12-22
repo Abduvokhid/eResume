@@ -56,3 +56,7 @@ module.exports.createFacebookAccount = async (user_id, facebook_id, email) => {
 module.exports.updateUserPassword = async (user_id, password) => {
   await Account.updateOne({ user: user_id, method: 'password' }, { 'data.password': password })
 }
+
+module.exports.markEmailVerified = async (account_id) => {
+  await Account.findByIdAndUpdate(account_id, { 'data.is_verified': true })
+}
