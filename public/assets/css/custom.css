@@ -3,6 +3,11 @@
     color: #f0f0f0;
 }
 
+.alert-warning ::selection {
+    background-color: #fcb92c;
+    color: #976f1a;
+}
+
 @media print {
     .no-print {
         visibility: hidden;

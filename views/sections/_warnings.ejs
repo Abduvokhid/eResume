@@ -1,0 +1,8 @@
+<% if (account.method === 'password' && !!!account.data.is_verified) { %>
+<div class="col-12 px-2">
+    <div class="alert alert-warning d-flex align-items-center flex-wrap flex-lg-nowrap" role="alert">
+        <div><strong>Внимание!</strong> Пожалуйста, подтвердите почту! Ссылка для подтверждения была отправлена на вашу почту.<br/>Некоторые возможности будут ограничены пока вы не подтвердите свою почту.</div>
+        <div class="ms-lg-auto mt-2 mt-lg-0"><button class="btn btn-warning btn-sm">Повторно отправить</button></div>
+    </div>
+</div>
+<% } %>

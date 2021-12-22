@@ -22,6 +22,7 @@
     "moment": "2.29.1",
     "mongoose": "6.0.12",
     "nl2br": "0.0.3",
+    "sha1": "^1.1.1",
     "svg-captcha": "1.4.0"
   },
   "devDependencies": {

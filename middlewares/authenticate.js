@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
   const account = await getAccountByID(account_id)
   if (!account) {
     delete req.session.account
-    next()
+    return next()
   }
 
   req.user = account.user

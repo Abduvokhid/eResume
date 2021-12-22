@@ -3,7 +3,10 @@ const svgCaptcha = require('svg-captcha')
 const bcrypt = require('bcrypt')
 const userDAL = require('../DAL/user')
 const accountDAL = require('../DAL/account')
+const verificationDAL = require('../DAL/verification')
+const { sendVerification } = require('../services/sendinblue')
 const checkPermission = require('../middlewares/checkPermission')
+const sha1 = require('sha1')
 const router = express.Router()
 
 router.get('/login', async (req, res) => {
@@ -28,8 +31,10 @@ router.post('/login', async (req, res) => {
 
   const error = async () => {
     await req.flash('login_error', 'Указаны неверные данные. Пожалуйста, попробуйте еще раз.')
-    return res.render('core/login', { layout: 'core_layout', email,
-      domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000', error: await req.getFlash('login_error') })
+    return res.render('core/login', {
+      layout: 'core_layout', email,
+      domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000', error: await req.getFlash('login_error')
+    })
   }
 
   const account = await accountDAL.getAccountByEmail(email)
@@ -50,8 +55,10 @@ router.get('/register', (req, res) => {
 
   const captcha = svgCaptcha.create({ size: 5, noise: 2 })
   req.session.captcha = captcha.text
-  res.render('core/register', { layout: 'core_layout', captcha: captcha.data,
-    domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000' })
+  res.render('core/register', {
+    layout: 'core_layout', captcha: captcha.data,
+    domain: process.env.CURRENT_DOMAIN || 'http://localhost:5000'
+  })
 })
 
 router.post('/register', async (req, res) => {
@@ -84,7 +91,11 @@ router.post('/register', async (req, res) => {
 
   await req.flash('register_success', 'Ваш аккаунт успешно зарегистрирован!')
   const user = await userDAL.createUser(name)
-  await accountDAL.createPasswordAccount(user._id, email, password_hash)
+  const account = await accountDAL.createPasswordAccount(user._id, email, password_hash)
+
+  const hash = sha1(`${account._id}${email}${Date.now()}`)
+  await verificationDAL.createVerification(account._id, hash, 'validate')
+  await sendVerification(email, `${process.env.CURRENT_DOMAIN}/validate/${hash}`)
   res.redirect('/login')
 })
 
@@ -124,6 +135,12 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
   res.cookie('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.')
 
   return res.redirect('/login')
+})
+
+router.get('/validate/:hash', async (req, res) => {
+  const verification = await verificationDAL.getVerification(req.params.hash, 'validate')
+
+  res.send(verification)
 })
 
 router.get('/', checkPermission(), (req, res) => {

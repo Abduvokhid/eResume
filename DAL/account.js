@@ -25,9 +25,10 @@ module.exports.createPasswordAccount = async (user_id, email, password) => {
     user: user_id,
     method: 'password',
     unique_id: email.toLowerCase(),
-    data: { password: password }
+    data: { password: password, is_verified: false }
   })
   await account.save()
+  return account
 }
 
 module.exports.createGoogleAccount = async (user_id, google_id, email) => {
