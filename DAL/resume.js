@@ -4,15 +4,16 @@ module.exports.getResumes = async (user_id) => {
   return Resume.find({ user: user_id }).lean()
 }
 
-module.exports.createResume = async (user_id, title, name, job_position, about, living_city, gender) => {
+module.exports.createResume = async (user_id, title, name, job_position, about, living_city, gender, birthday) => {
   const resume = new Resume({
     user: user_id,
     title: title,
     name: name,
-    job_position: job_position,
-    about: about,
-    living_city: living_city,
-    gender: gender
+    job_position: !!job_position ? job_position : undefined,
+    about: !!about ? about : undefined,
+    living_city: !!living_city ? living_city : undefined,
+    gender: gender,
+    birthday: !!birthday ? birthday : undefined
   })
   await resume.save()
   return resume
@@ -50,14 +51,15 @@ module.exports.setResumeUpdated = async (resume_id) => {
   await Resume.findByIdAndUpdate(resume_id, { edited_date: Date.now() })
 }
 
-module.exports.updateResume = async (resume_id, title, name, about, job_position, living_city, gender) => {
+module.exports.updateResume = async (resume_id, title, name, about, job_position, living_city, gender, birthday) => {
   await Resume.findByIdAndUpdate(resume_id, {
     title: title,
     name: name,
-    job_position: job_position,
-    about: about,
-    living_city: living_city,
+    job_position: !!job_position ? job_position : undefined,
+    about: !!about ? about : undefined,
+    living_city: !!living_city ? living_city : undefined,
     gender: gender,
+    birthday: !!birthday ? birthday : undefined,
     edited_date: Date.now()
   })
 }

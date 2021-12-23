@@ -20,9 +20,20 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="birthday" class="form-label">Дата рождения</label>
+                        <input type="date" id="birthday" name="birthday" value="<%= resume.birthday %>" class="form-control"/>
+                    </div>
+
+                    <script>
+                        function checkit(e) {
+                          console.log(e)
+                        }
+                    </script>
+
+                    <div class="mb-3">
                         <label for="living_city" class="form-label">Город проживания</label>
                         <input type="text" id="living_city" name="living_city" class="form-control"
-                               placeholder="Ташкент, Узбекистан и тд." value="<%= resume.living_city %>"/>
+                               placeholder="Ташкент, Узбекистан и тд." oninput="checkit(this)" value="<%= resume.living_city %>"/>
                     </div>
 
                     <div class="mb-3">

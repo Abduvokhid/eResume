@@ -140,13 +140,11 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
 router.get('/validate/:hash', async (req, res) => {
   const verification = await verificationDAL.getVerification(req.params.hash, 'validate')
   if (!verification || !verification.account || !verification.account.user) {
-    return res.render('core/verify', { layout: 'core_layout', message: 'Э-почта не может быть подтверждена. Попробуйте заново или обращайтесь службе поддержки.', type: 'danger' })
+    return res.render('core/verify', { layout: 'core_layout', message: 'Э-почта не может быть подтверждена или уже была подтверждена. Попробуйте заново или обращайтесь службе поддержки.', type: 'danger' })
   }
 
-  // await accountDAL.markEmailVerified(verification.account._id)
-  // await verificationDAL.deleteVerification(verification._id)
-
-  // res.send(verification)
+  await accountDAL.markEmailVerified(verification.account._id)
+  await verificationDAL.deleteVerification(verification._id)
 
   res.render('core/verify', { layout: 'core_layout', message: 'Э-почта подтверждена', type: 'success' })
 })

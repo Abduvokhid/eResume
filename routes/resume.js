@@ -16,8 +16,8 @@ router.get('/new', checkPermission(), async (req, res) => {
 })
 
 router.post('/new', checkPermission(), async (req, res) => {
-  const { title, name, job_position, about, living_city, gender } = req.body
-  const resume = await ResumeDAL.createResume(req.user._id, title, name, job_position, about, living_city, gender)
+  const { title, name, job_position, about, living_city, gender, birthday } = req.body
+  const resume = await ResumeDAL.createResume(req.user._id, title, name, job_position, about, living_city, gender, birthday)
   res.redirect(`/resume/${resume._id}`)
 })
 
@@ -32,8 +32,8 @@ router.post('/:id/edit', checkPermission(), async (req, res) => {
   const resume = await ResumeDAL.getResumeByID(req.params.id)
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
-  const { title, name, about, job_position, living_city, gender } = req.body
-  await ResumeDAL.updateResume(req.params.id, title, name, about, job_position, living_city, gender)
+  const { title, name, about, job_position, living_city, gender, birthday } = req.body
+  await ResumeDAL.updateResume(req.params.id, title, name, about, job_position, living_city, gender, birthday)
   res.redirect(`/resume/${req.params.id}`)
 })
 

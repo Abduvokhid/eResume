@@ -25,8 +25,11 @@
             <% if (resume.job_position) { %>
                 <h6 class="card-subtitle font-14 text-muted"><%= resume.job_position %></h6>
             <% } %>
-            <% if (resume.living_city || (resume.gender && resume.gender !== 'hidden') || (resume.about && resume.about !== '')) { %>
+            <% if (resume.living_city || resume.birthday || (resume.gender && resume.gender !== 'hidden') || (resume.about && resume.about !== '')) { %>
                 <div>&nbsp;</div>
+            <% } %>
+            <% if (resume.birthday) { %>
+                <div class="card-text"><b>Дата рождения:</b> <%= moment(resume.birthday).format('DD/MM/YYYY') %></div>
             <% } %>
             <% if (resume.living_city) { %>
                 <div class="card-text"><b>Город проживания:</b> <%= resume.living_city %></div>
