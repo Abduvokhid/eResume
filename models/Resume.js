@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const ResumeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'user',
+    required: true
   },
   name: {
     type: String,
@@ -37,6 +38,10 @@ const ResumeSchema = new mongoose.Schema({
   jobs: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'job'
+  }],
+  contacts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'contact'
   }],
   status: {
     type: String,

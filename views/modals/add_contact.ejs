@@ -1,0 +1,31 @@
+<div class="modal fade bs-contact-modal-center" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить способ связи</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_contact_form" class="custom-validation" action="/resume/<%= resume._id %>/add_contact" method="post">
+                    <div class="mb-3">
+                        <label for="type" class="form-label"><sup class="text-danger">*</sup> Способ связи</label>
+                        <select name="type" id="type" aria-label="contact_type" class="form-select">
+                            <option value="email">Э-почта</option>
+                            <option value="phone">Телефон</option>
+                            <option value="telegram">Telegram</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="value" class="form-label"><sup class="text-danger">*</sup> Контактные данные</label>
+                        <input type="text" aria-label="contact_value" id="value" name="value" class="form-control" placeholder="your@mail.uz" required/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Отмена</button>
+                <button form="add_contact_form" type="submit" class="btn btn-success waves-effect waves-light">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@
 
 <div class="row no-cursor">
     <div class="col-md-8">
-        <div class="card card-body mb-0 border-bottom-none">
+        <div class="card card-body">
             <h4 class="card-title"><b><%= resume.name %></b> <a href="#" class="float-end"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target=".bs-edit-resume-modal-center">[редактировать]</a>
@@ -44,19 +44,24 @@
                 <div class="card-text"><b>Обо мне:</b> <%= resume.about %></div>
             <% } %>
         </div>
-        <div class="card border-top-none bg-soft-light">
-            <div class="card-body d-flex flex-wrap justify-content-around">
-                <div class="col-lg-4 p-1">
-                    <a href="#" class="btn btn-soft-secondary d-block"><i class="mdi mdi-email"></i>&nbsp;Показать почту</a>
-                </div>
-                <div class="col-lg-4 p-1">
-                    <a href="#" class="btn btn-soft-secondary d-block"><i
-                                class="mdi mdi-phone"></i>&nbsp;Показать номер</a>
-                </div>
-                <div class="col-lg-4 p-1">
-                    <a href="#" class="btn btn-soft-secondary d-block"><i
-                                class="mdi mdi-telegram"></i>&nbsp;Показать юзернейм</a>
-                </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-muted"><b>Контакты</b> <a href="#" class="float-end"
+                                                                     data-bs-toggle="modal"
+                                                                     data-bs-target=".bs-contact-modal-center">[добавить]</a>
+                </h5>
+                <% if (resume.contacts.length > 0) { %>
+                    <% for (const contact of resume.contacts) { %>
+                        <span class="d-block">
+                            <span class="badge <%= selector.aContactType(contact.type) %>"><%= selector.tContactType(contact.type) %></span>
+                            <%= contact.value %>
+                            <a href="#" data-bs-toggle="modal" data-bs-target=".bs-delete-job-modal-<%= contact._id %>">[удалить]</a>
+                        </span>
+                    <% } %>
+                <% } else { %>
+                    <h6 class="font-14 text-muted mb-0">Нет данных</h6>
+                <% } %>
             </div>
         </div>
 
@@ -158,3 +163,4 @@
 <%- include('../modals/delete_resume') %>
 <%- include('../modals/add_job') %>
 <%- include('../modals/add_education') %>
+<%- include('../modals/add_contact') %>

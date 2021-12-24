@@ -1,6 +1,7 @@
 const express = require('express')
 const ResumeDAL = require('../DAL/resume')
 const EducationDAL = require('../DAL/education')
+const ContactDAL = require('../DAL/contact')
 const JobDAL = require('../DAL/job')
 const checkPermission = require('../middlewares/checkPermission')
 const { sortByDates } = require('../helpers/sorters')
@@ -19,13 +20,6 @@ router.post('/new', checkPermission(), async (req, res) => {
   const { title, name, job_position, about, living_city, gender, birthday } = req.body
   const resume = await ResumeDAL.createResume(req.user._id, title, name, job_position, about, living_city, gender, birthday)
   res.redirect(`/resume/${resume._id}`)
-})
-
-router.get('/:id/edit', checkPermission(), async (req, res) => {
-  const resume = await ResumeDAL.getResumeByID(req.params.id)
-  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
-  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
-  res.render('resume/edit', { resume })
 })
 
 router.post('/:id/edit', checkPermission(), async (req, res) => {
@@ -64,7 +58,7 @@ router.post('/:id/add_job', checkPermission(), async (req, res) => {
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
 
-  const data = { ...req.body }
+  const data = { ...req.body, user: req.user._id }
 
   if (data.title === '') delete data.title
   if (data.company === '') delete data.company
@@ -87,7 +81,7 @@ router.post('/:id/add_education', checkPermission(), async (req, res) => {
   if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
   if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
 
-  const data = { ...req.body }
+  const data = { ...req.body, user: req.user._id }
 
   if (data.name === '') delete data.name
   if (data.course === '') delete data.course
@@ -100,6 +94,19 @@ router.post('/:id/add_education', checkPermission(), async (req, res) => {
 
   const education = await EducationDAL.addEducation(data)
   await ResumeDAL.addEducationToResume(resume._id, education._id)
+
+  res.redirect(`/resume/${req.params.id}`)
+})
+
+router.post('/:id/add_contact', checkPermission(), async (req, res) => {
+  const resume = await ResumeDAL.getResumeByID(req.params.id)
+  if (!resume) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+  if (resume.user.toString() !== req.user._id.toString()) return res.status(404).render('core/not_found', { layout: 'core_layout' })
+
+  const data = { ...req.body, user: req.user._id }
+
+  const contact = await ContactDAL.createContact(data)
+  await ResumeDAL.addContactToResume(resume._id, contact._id)
 
   res.redirect(`/resume/${req.params.id}`)
 })
