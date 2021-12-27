@@ -56,8 +56,9 @@
                         <span class="d-block">
                             <span class="badge <%= selector.aContactType(contact.type) %>"><%= selector.tContactType(contact.type) %></span>
                             <%= contact.value %>
-                            <a href="#" data-bs-toggle="modal" data-bs-target=".bs-delete-job-modal-<%= contact._id %>">[удалить]</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target=".bs-delete-contact-modal-<%= contact._id %>">[удалить]</a>
                         </span>
+                        <%- include('../modals/delete_contact', {contact}) %>
                     <% } %>
                 <% } else { %>
                     <h6 class="font-14 text-muted mb-0">Нет данных</h6>
