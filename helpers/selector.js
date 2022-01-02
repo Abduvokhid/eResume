@@ -1,5 +1,6 @@
 // a - alert
 // t - text
+// at - attribute
 
 
 module.exports.isSelected = (current_value, required_value) => {
@@ -28,4 +29,8 @@ module.exports.aContactType = (value) => {
     case 'phone': return 'badge-soft-success text-success'
     case 'telegram': return 'badge-soft-info text-info'
   }
+}
+
+module.exports.atEmailPref = (value) => {
+  if (!!value) return 'checked'
 }

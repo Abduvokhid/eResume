@@ -4,14 +4,14 @@ const bcrypt = require('bcrypt')
 const userDAL = require('../DAL/user')
 const accountDAL = require('../DAL/account')
 const verificationDAL = require('../DAL/verification')
-const { sendVerification } = require('../services/sendinblue')
+const {sendVerification} = require('../services/sendinblue')
 const checkPermission = require('../middlewares/checkPermission')
 const sha1 = require('sha1')
 const router = express.Router()
 
 router.get('/login', async (req, res) => {
   if (req.user) return res.redirect('/')
-  const { redirect_to } = req.query
+  const {redirect_to} = req.query
   if (redirect_to) req.session.redirect_to = redirect_to
   const success = await req.getFlash('register_success')
   const password_success = req.cookies.password_success
@@ -27,7 +27,7 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => {
   if (req.user) return res.redirect('/')
 
-  const { email, password } = req.body
+  const {email, password} = req.body
 
   const error = async () => {
     await req.flash('login_error', 'Указаны неверные данные. Пожалуйста, попробуйте еще раз.')
@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
 router.get('/register', (req, res) => {
   if (req.user) return res.redirect('/')
 
-  const captcha = svgCaptcha.create({ size: 5, noise: 2 })
+  const captcha = svgCaptcha.create({size: 5, noise: 2})
   req.session.captcha = captcha.text
   res.render('core/register', {
     layout: 'core_layout', captcha: captcha.data,
@@ -64,11 +64,11 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   if (req.user) return res.redirect('/')
 
-  const { name, email, password, confirm_password, captcha } = req.body
+  const {name, email, password, confirm_password, captcha} = req.body
 
   const error = async (message) => {
     await req.flash('register_error', message)
-    const captcha = svgCaptcha.create({ size: 5, noise: 2 })
+    const captcha = svgCaptcha.create({size: 5, noise: 2})
     req.session.captcha = captcha.text
     return res.render('core/register', {
       layout: 'core_layout',
@@ -110,7 +110,7 @@ router.get('/account', checkPermission(), (req, res) => {
 
 router.get('/settings', checkPermission(), async (req, res) => {
   const flash = await req.getFlash()
-  return res.render('dashboard/settings', { flash })
+  return res.render('dashboard/settings', {flash})
 })
 
 router.post('/settings/password', checkPermission(), async (req, res) => {
@@ -119,7 +119,7 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
     await res.redirect('/settings')
   }
 
-  const { old_password, new_password, new_password_confirm } = req.body
+  const {old_password, new_password, new_password_confirm} = req.body
 
   if (new_password_confirm !== new_password) return await error('passwords_mismatch', 'Новые пароли не совпадают. Попробуйте заново.')
 
@@ -131,22 +131,39 @@ router.post('/settings/password', checkPermission(), async (req, res) => {
   const password_hash = await bcrypt.hash(new_password, parseInt(process.env.BCRYPT_ROUNDS))
   await accountDAL.updateUserPassword(req.user._id, password_hash)
 
-  req.session.regenerate(() => {})
+  req.session.regenerate(() => {
+  })
   res.cookie('password_success', 'Пароль успешно изменён! Теперь авторизуйтесь.')
 
   return res.redirect('/login')
 })
 
+router.post('/settings/email_preferences', checkPermission(), async (req, res) => {
+  const {new_features} = req.body
+
+  const data = {
+    new_features: new_features === 'on'
+  }
+
+  await userDAL.updateEmailPreferences(req.user._id, data)
+
+  return res.redirect('/settings')
+})
+
 router.get('/validate/:hash', async (req, res) => {
   const verification = await verificationDAL.getVerification(req.params.hash, 'validate')
   if (!verification || !verification.account || !verification.account.user) {
-    return res.render('core/verify', { layout: 'core_layout', message: 'Э-почта не может быть подтверждена или уже была подтверждена. Попробуйте заново или обращайтесь службе поддержки.', type: 'danger' })
+    return res.render('core/verify', {
+      layout: 'core_layout',
+      message: 'Э-почта не может быть подтверждена или уже была подтверждена. Попробуйте заново или обращайтесь службе поддержки.',
+      type: 'danger'
+    })
   }
 
   await accountDAL.markEmailVerified(verification.account._id)
   await verificationDAL.deleteVerification(verification._id)
 
-  res.render('core/verify', { layout: 'core_layout', message: 'Э-почта подтверждена', type: 'success' })
+  res.render('core/verify', {layout: 'core_layout', message: 'Э-почта подтверждена', type: 'success'})
 })
 
 router.get('/', checkPermission(), (req, res) => {

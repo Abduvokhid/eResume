@@ -8,6 +8,10 @@ module.exports.createUser = async (name) => {
   return user
 }
 
+module.exports.updateEmailPreferences = async (id, data) => {
+  await User.findByIdAndUpdate(id, {email_preferences: data})
+}
+
 module.exports.getUserByID = (id) => {
   return User.findById(id)
 }

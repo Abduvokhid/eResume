@@ -73,7 +73,7 @@
 
                     <% if (account.method === 'password') { %>
                         <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" value="" id="reset_password"
+                            <input class="form-check-input" type="checkbox" id="reset_password"
                                    name="reset_password" checked disabled>
                             <label class="form-check-label" for="reset_password">
                                 Сброс пароля
@@ -82,7 +82,7 @@
                     <% } %>
 
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" value="" id="new_features" name="new_features">
+                        <input class="form-check-input" type="checkbox" id="new_features" name="new_features" <%= selector.atEmailPref(user.email_preferences.new_features) %>>
                         <label class="form-check-label" for="new_features">
                             Обновления и новые возможности
                         </label>
