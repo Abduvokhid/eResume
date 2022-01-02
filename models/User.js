@@ -5,6 +5,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  email_preferences: {
+    new_features: {
+      type: Boolean,
+      default: true
+    }
+  },
   created_date: {
     type: Date,
     default: Date.now
