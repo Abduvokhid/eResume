@@ -1,7 +1,7 @@
 const Account = require('../models/Account')
 
 module.exports.getAccountByID = (id) => {
-  return Account.findById(id).populate('user')
+  return Account.findById(id).populate('user').lean()
 }
 
 module.exports.getAccountByEmail = (email) => {

@@ -8,15 +8,20 @@ const { sortByDates } = require('../helpers/sorters')
 const router = express.Router()
 
 router.get('/', checkPermission(), async (req, res) => {
-  const user_resumes = await ResumeDAL.getResumes(req.user._id)
-  res.render('resume/index', { user_resumes })
+  (req.user.resumes.length > 0) ? res.redirect(`/resume/${req.user.resumes[0]._id}`) : res.redirect('/resume/new')
+  // const user_resumes = await ResumeDAL.getResumes(req.user._id)
+  // res.render('resume/index', { user_resumes })
 })
 
 router.get('/new', checkPermission(), async (req, res) => {
+  if (req.user.resumes.length > 0) res.redirect(`/resume/${req.user.resumes[0]._id}`)
+
   res.render('resume/new')
 })
 
 router.post('/new', checkPermission(), async (req, res) => {
+  if (req.user.resumes.length > 0) res.redirect(`/resume/${req.user.resumes[0]._id}`)
+
   const { title, name, job_position, about, living_city, gender, birthday } = req.body
   const resume = await ResumeDAL.createResume(req.user._id, title, name, job_position, about, living_city, gender, birthday)
   res.redirect(`/resume/${resume._id}`)

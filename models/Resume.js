@@ -6,6 +6,9 @@ const ResumeSchema = new mongoose.Schema({
     ref: 'user',
     required: true
   },
+  slug: {
+    type: String,
+  },
   name: {
     type: String,
     required: true

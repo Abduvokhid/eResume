@@ -12,9 +12,15 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="/resume">
-                            <i class="mdi mdi-briefcase-variant-outline me-2"></i>Мои резюме
-                        </a>
+                        <% if (user.resumes.length > 0) { %>
+                            <a class="nav-link" href="<%= '/resume/' + user.resumes[0]._id %>">
+                                <i class="mdi mdi-briefcase-variant-outline me-2"></i>Мое резюме
+                            </a>
+                        <% } else { %>
+                                <a class="nav-link" href="/resume/new">
+                                    <i class="mdi mdi-briefcase-variant-outline me-2"></i>Создать резюме
+                                </a>
+                        <% } %>
                     </li>
 
                     <li class="nav-item dropdown hidden">

@@ -1,4 +1,5 @@
 const { getAccountByID } = require('../DAL/account')
+const { getResumes } = require('../DAL/resume')
 
 module.exports = async (req, res, next) => {
   if (req.session === undefined || req.session.account === undefined) return next()
@@ -15,5 +16,8 @@ module.exports = async (req, res, next) => {
   account.user = undefined
   req.account = account
   req.app.locals.account = account
+
+  req.user.resumes = await getResumes(req.user._id)
+
   next()
 }
