@@ -1,4 +1,12 @@
 const mongoose = require('mongoose')
+const slug = require('mongoose-slug-generator')
+
+const options = {
+  separator: "-",
+  truncate: 120
+}
+
+mongoose.plugin(slug, options)
 
 const ResumeSchema = new mongoose.Schema({
   user: {
@@ -8,6 +16,9 @@ const ResumeSchema = new mongoose.Schema({
   },
   slug: {
     type: String,
+    slug: 'name',
+    unique: true,
+    slug_padding_size: 1
   },
   name: {
     type: String,
